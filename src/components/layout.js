@@ -9,7 +9,7 @@ class Layout extends React.Component {
     const rootPath = `${__PATH_PREFIX__}/`
     let header
 
-    if (location.pathname === rootPath) {
+    if (location && location.pathname === rootPath) {
       header = (
         <h1 className="text-6xl font-black font-sans mb-10 mt-0">
           <Link className="shadow-none" to={`/`}>
@@ -30,7 +30,7 @@ class Layout extends React.Component {
       <div className="max-w-2xl mx-auto px-5 py-10">
         <header>{header}</header>
         <main>{children}</main>
-        <footer>© {new Date().getFullYear()}</footer>
+        <footer className="mt-20">© {new Date().getFullYear()}</footer>
       </div>
     )
   }

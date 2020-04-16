@@ -1,6 +1,6 @@
 // custom typefaces
-import "typeface-montserrat"
-import "typeface-merriweather"
+import "typeface-source-sans-pro"
+import "typeface-source-serif-pro"
 
 // TailwindCSS
 // Read more on how to add other base styles https://tailwindcss.com/docs/adding-base-styles

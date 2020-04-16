@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ["Merriweather", ...defaultTheme.fontFamily.serif],
-        sans: ["Montserrat", ...defaultTheme.fontFamily.sans],
+        serif: ["Source Serif Pro", ...defaultTheme.fontFamily.serif],
+        sans: ["Source Sans Pro", ...defaultTheme.fontFamily.sans],
       },
     },
   },

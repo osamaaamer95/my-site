@@ -1,17 +1,22 @@
 import Typography from "typography"
-import Wordpress2016 from "typography-theme-wordpress-2016"
+import StAnnes from "typography-theme-st-annes"
 
-Wordpress2016.overrideThemeStyles = () => {
+StAnnes.overrideThemeStyles = ({ rhythm }, options) => {
   return {
     "a.gatsby-resp-image-link": {
       boxShadow: `none`,
     },
+    "h2,h3,h4,h5": {
+      fontFamily: "Source Sans Pro",
+      marginBottom: rhythm(1 / 2),
+      marginTop: rhythm(2),
+    },
   }
 }
 
-delete Wordpress2016.googleFonts
+delete StAnnes.googleFonts
 
-const typography = new Typography(Wordpress2016)
+const typography = new Typography(StAnnes)
 
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== `production`) {

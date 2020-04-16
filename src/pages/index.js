@@ -2,17 +2,14 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import { RichText } from "prismic-reactjs"
 import { linkResolver } from "../utils/linkResolver"
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
 
 class BlogIndex extends React.Component {
   render() {
     const {
       data: { prismic },
     } = this.props
-    console.log(prismic)
 
     const homepageData = prismic.allHomepages.edges[0].node
     const siteTitle = homepageData.title
@@ -21,17 +18,20 @@ class BlogIndex extends React.Component {
     return (
       <Layout location={this.props.location}>
         <SEO title="Home" />
-        <h1>{RichText.render(siteTitle)}</h1>
-        <h2>{RichText.render(subTitle)}</h2>
-        <section>
-          <h3>
+        <h1 className="font-bold text-xl mb-3">{RichText.render(siteTitle)}</h1>
+        <h2 className="font-sans">{RichText.render(subTitle)}</h2>
+        <section className="mt-4">
+          <h3 className="mb-2">
             {RichText.render(homepageData.body[0].primary.title_of_section)}
           </h3>
-          {homepageData.body[0].fields.map(link => {
+          {homepageData.body[0].fields.map((link, i) => {
             return (
-              <Link to={linkResolver(link.articles_to_link._meta)}>
-                {RichText.render(link.articles_to_link.title)}
-              </Link>
+              <div className="flex flex-row items-center">
+                <span className="mr-2">{`${i + 1}.`}</span>
+                <Link to={linkResolver(link.articles_to_link._meta)}>
+                  {RichText.asText(link.articles_to_link.title)}
+                </Link>
+              </div>
             )
           })}
         </section>
