@@ -13,3 +13,8 @@ import "tailwindcss/utilities.css"
 // Markdown formatting, uses Tailwind @apply primitive to apply Tailwind's utility classes to
 // elements created by the Markdown parser
 import "./src/markdown.css"
+
+const { registerLinkResolver } = require("gatsby-source-prismic-graphql")
+const { linkResolver } = require("./src/utils/linkResolver")
+
+registerLinkResolver(linkResolver)

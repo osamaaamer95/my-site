@@ -1,11 +1,11 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog TailwindCSS`,
-    author: `Kyle Mathews`,
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-tailwindcss-demo.netlify.com/`,
+    title: `My Blog`,
+    author: `Osama Aamer`,
+    description: `I write code and occasionally go out for a walk`,
+    siteUrl: `https://osamaaamer.com/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `osamaaamer`,
     },
   },
   plugins: [
@@ -21,6 +21,24 @@ module.exports = {
       options: {
         path: `${__dirname}/content/assets`,
         name: `assets`,
+      },
+    },
+    {
+      resolve: "gatsby-source-prismic-graphql",
+      options: {
+        repositoryName: "neyoform", // required
+        defaultLang: "en-us", // optional, but recommended
+        accessToken: process.env.PRISMIC_ACCESS_TOKEN, // optional
+        path: "/preview",
+        previews: true, // optional, default: false
+        pages: [
+          {
+            type: "Article", // TypeName from prismic
+            match: "/article/:uid", // pages will be generated under this pattern (optional)
+            path: "/article-preview", // placeholder page for unpublished documents
+            component: require.resolve("./src/templates/article.js"),
+          },
+        ],
       },
     },
     {
@@ -50,15 +68,15 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
+        trackingId: `UA-99268613-2`,
       },
     },
-    `gatsby-plugin-feed`,
+    // `gatsby-plugin-feed`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Osama Aamer`,
+        short_name: `I write things`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,

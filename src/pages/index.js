@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-
+import { RichText } from "prismic-reactjs"
+import { linkResolver } from "../utils/linkResolver"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -8,40 +9,32 @@ import { rhythm } from "../utils/typography"
 
 class BlogIndex extends React.Component {
   render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
+    const {
+      data: { prismic },
+    } = this.props
+    console.log(prismic)
+
+    const homepageData = prismic.allHomepages.edges[0].node
+    const siteTitle = homepageData.title
+    const subTitle = homepageData.subtitle
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO title="All posts" />
-        <Bio />
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug
-          return (
-            <article key={node.fields.slug}>
-              <header>
-                <h3 className="text-2xl font-black mt-16 mb-2">
-                  <Link
-                    className="text-blue-600 shadow-none"
-                    to={node.fields.slug}
-                  >
-                    {title}
-                  </Link>
-                </h3>
-                <small>{node.frontmatter.date}</small>
-              </header>
-              <section>
-                <p
-                  className="mb-8"
-                  dangerouslySetInnerHTML={{
-                    __html: node.frontmatter.description || node.excerpt,
-                  }}
-                />
-              </section>
-            </article>
-          )
-        })}
+      <Layout location={this.props.location}>
+        <SEO title="Home" />
+        <h1>{RichText.render(siteTitle)}</h1>
+        <h2>{RichText.render(subTitle)}</h2>
+        <section>
+          <h3>
+            {RichText.render(homepageData.body[0].primary.title_of_section)}
+          </h3>
+          {homepageData.body[0].fields.map(link => {
+            return (
+              <Link to={linkResolver(link.articles_to_link._meta)}>
+                {RichText.render(link.articles_to_link.title)}
+              </Link>
+            )
+          })}
+        </section>
       </Layout>
     )
   }
@@ -49,24 +42,32 @@ class BlogIndex extends React.Component {
 
 export default BlogIndex
 
-export const pageQuery = graphql`
+export const query = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
+    prismic {
+      allHomepages {
+        edges {
+          node {
             title
-            description
+            subtitle
+            body {
+              ... on PRISMIC_HomepageBodyList_of_articles {
+                primary {
+                  title_of_section
+                }
+                fields {
+                  articles_to_link {
+                    ... on PRISMIC_Article {
+                      _meta {
+                        uid
+                        type
+                      }
+                      title
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
