@@ -38,7 +38,8 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "webpack": "^4.42.1"
   },
   "homepage": "https://github.com/andrezzoid/gatsby-starter-blog-tailwindcss#readme",
   "keywords": [
